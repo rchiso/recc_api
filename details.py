@@ -3,6 +3,7 @@ import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 from keys import lastfm_api_key, spotify_clientID, spotify_clientSecret
 import numpy as np
+from recc import find_similar_songs
 
 class Song:
     def __init__(self, name, artist):
@@ -40,7 +41,7 @@ class User:
         self.username = username #Last.fm username
         self.top_songs = None
     
-    def fetch_top_songs(self, num=10):
+    def fetch_top_songs(self, num=20):
         url = 'http://ws.audioscrobbler.com/2.0/?method=user.gettoptracks'
         params = dict(
             user = self.username,
@@ -53,13 +54,25 @@ class User:
         data = data['toptracks']['track']
         song_list = []
         for i in range(num):
-            song_name = data[str(i)]['name']
-            artist_name = data[str(i)]['artist']['name']
-            song_list.append(Song(song_name,artist_name))
+            song_name = data[i]['name']
+            artist_name = data[i]['artist']['name']
+            song = Song(song_name, artist_name)
+            song.get_song_features()
+            song_list.append(song)
         self.top_songs = song_list
-
+        return self.top_songs
 
 
 if __name__ == '__main__':
-    song = Song('Good Luck', 'Broken Bells')
-    song.get_song_features()
+    #song = Song('Good Luck', 'Broken Bells')
+    #song.get_song_features()
+    username1 = 'qfu10'
+    username2 = 'Thundera77'
+    user1 = User(username1)
+    user2 = User(username2)
+    ts1 = user1.fetch_top_songs(num=50)
+    ts2 = user2.fetch_top_songs(num=50)
+    reccs = find_similar_songs(ts1, ts2, num=5)
+    for recc in reccs:
+        print(f'Song Name = {recc.name}, Artist = {recc.artist}')
+
