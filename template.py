@@ -33,6 +33,8 @@ class Song:
         self.fv = feature_vector
 
 
+
+
 class User:
     def __init__(self, username):
         self.username = username #Last.fm username
