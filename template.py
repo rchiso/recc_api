@@ -30,7 +30,6 @@ class Song:
 
         for i in range(len(features)):
             feature_vector[i] = self.details[features[i]]
-        
         self.fv = feature_vector
 
 
