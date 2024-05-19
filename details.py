@@ -62,17 +62,3 @@ class User:
         self.top_songs = song_list
         return self.top_songs
 
-
-if __name__ == '__main__':
-    #song = Song('Good Luck', 'Broken Bells')
-    #song.get_song_features()
-    username1 = 'qfu10'
-    username2 = 'Thundera77'
-    user1 = User(username1)
-    user2 = User(username2)
-    ts1 = user1.fetch_top_songs(num=50)
-    ts2 = user2.fetch_top_songs(num=50)
-    reccs = find_similar_songs(ts1, ts2, num=5)
-    for recc in reccs:
-        print(f'Song Name = {recc.name}, Artist = {recc.artist}')
-
