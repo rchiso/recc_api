@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: recc-service
+  namespace: default
+spec:
+  type: LoadBalancer
+  selector:
+    app: reccomendation-api
+  ports:
+    - protocol: "TCP"  
+      port: 80 
+      targetPort: 5000
+      nodePort: 30001  
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: reccomendation-api
+  namespace: default
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: reccomendation-api   
+  template:
+    metadata:
+      labels:
+        app: reccomendation-api
+    spec:
+      containers:
+      - name: reccomendation-api
+        image: rchiso/reccapi
+        ports: 
+        - containerPort: 5000
+
