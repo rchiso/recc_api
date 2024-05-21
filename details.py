@@ -3,7 +3,6 @@ import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 from keys import lastfm_api_key, spotify_clientID, spotify_clientSecret
 import numpy as np
-from recc import find_similar_songs
 
 class Song:
     def __init__(self, name, artist):
